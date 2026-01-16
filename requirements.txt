@@ -7,3 +7,7 @@ celery
 uvicorn
 asyncpg
 redis
+pytest
+httpx
+pytest-asyncio
+pytest-cov

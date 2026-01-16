@@ -22,7 +22,6 @@ async def get_latest_price(
     if not price:
         raise HTTPException(status_code=404, detail="Price not found")
 
-    # return price
     return {
         "ticker": price.ticker,
         "price": price.price,
@@ -74,41 +73,9 @@ async def get_prices_by_period(
         PriceReaderRepositoryImpl(session)
     )
 
-    prices = await service.get_prices_by_period(
+    return await service.get_prices_by_period(
         ticker=ticker.value,
         from_ts=from_ts,
         to_ts=to_ts,
         limit=limit,
     )
-
-    return [
-        {
-            "ticker": p.ticker,
-            "price": p.price,
-            "timestamp": p.timestamp,
-            "datetime": datetime.fromtimestamp(
-                p.timestamp, tz=timezone.utc
-            ),
-        }
-        for p in prices
-    ]
-
-# @router.get("/period", response_model=list[PriceOut])
-# async def get_price_period(
-#     ticker: TickerEnum,
-#     from_ts: int,
-#     to_ts: int,
-#     limit: int = 100,
-#     session: AsyncSession = Depends(get_session),
-# ):
-#     service = PriceReadService(PriceReaderRepositoryImpl(session))
-#
-#     try:
-#         return await service.get_prices_by_period(
-#             ticker=ticker.value,
-#             from_ts=from_ts,
-#             to_ts=to_ts,
-#             limit=limit,
-#         )
-#     except ValueError as e:
-#         raise HTTPException(status_code=400, detail=str(e))

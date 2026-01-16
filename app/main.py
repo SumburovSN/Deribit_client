@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from app.core.database import engine
 from app.infrastructure.db.models import Base
-from app.api.router import router as prices_router
+from app.api.routers import prices, tasks
 
 
 @asynccontextmanager
@@ -18,7 +18,8 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-app.include_router(prices_router)
+app.include_router(prices.router)
+app.include_router(tasks.router)
 
 @app.get("/")
 def root():
