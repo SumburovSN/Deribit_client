@@ -13,14 +13,12 @@ celery_app = Celery(
     ],
 )
 
+
 celery_app.conf.update(
     timezone="UTC",
     enable_utc=True,
 )
 
-# celery_app.autodiscover_tasks([
-#     "app.tasks",
-# ])
 
 celery_app.conf.beat_schedule = {
     "fetch-btc-eth-prices-every-minute": {

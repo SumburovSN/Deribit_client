@@ -4,7 +4,6 @@ from app.core.config import settings
 
 
 class DeribitClient:
-    # BASE_URL = "https://test.deribit.com/api/v2/public"
     BASE_URL = settings.deribit_base_url
 
     async def get_index_price(self, index_name: str) -> Decimal:
